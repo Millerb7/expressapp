@@ -14,8 +14,7 @@ app.get('/health', (req, res, next) => {
   next();
 });
 
-app.use('/*', routes);
-routes(app);
+app.use('*', routes);
 
 app.listen(port, () => {
   console.log(`This app is listening on port https://localhost:${port}`);
