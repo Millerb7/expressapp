@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-// all routes are localhost:3000/api/...
+// all routes are localhost:3000/user/...
 
 router.post('/', async (req,res,next) => {
   try {
