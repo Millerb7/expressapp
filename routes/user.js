@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/:username/:password', async (req,res,next) => {
+// all routes are localhost:3000/api/...
+
+router.post('/', async (req,res,next) => {
   try {
     console.log(req.params);
     console.log(req.body);
@@ -11,6 +13,15 @@ router.post('/:username/:password', async (req,res,next) => {
     res.status(500).json({ message: err.toString() });
 }
 });
+
+router.get('/login', async (req,res,next) => {
+  try {
+    
+  } catch (err) {
+    console.error('Failed to login:', err);
+    res.status(500).json({ message: err.toString() });
+  }
+})
 
 router.get('/*', (req, res) => {
   res.status(200).json("Healthy boi");

@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
-const routes = require('./routes');
+const userRoutes = require('./routes/user');
 
 const app = express();
 const port = 3000;
@@ -14,7 +14,7 @@ app.get('/health', (req, res, next) => {
   next();
 });
 
-app.use('*', routes);
+app.use('/user', userRoutes);
 
 app.listen(port, () => {
   console.log(`This app is listening on port https://localhost:${port}`);
