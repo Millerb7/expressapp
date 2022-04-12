@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const createModelsMiddleware = require('./middleware/model-middleware');
+const { createModelsMiddleware } = require('./middleware/model-middleware');
 
 const userRoutes = require('./routes/user');
 const sessionRoutes = require('./routes/session');

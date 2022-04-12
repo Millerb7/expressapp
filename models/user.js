@@ -29,7 +29,6 @@ const authenticateUser = async (email, password) => {
     return false;
 }
 
-
 module.exports = {
     createNewUser,
     findUserByEmail,
