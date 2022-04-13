@@ -10,7 +10,7 @@ module.exports = {
       user : 'root',
       password : 'root',
       insecureAuth: true,
-      database : 'smu'
+      database : 'parking'
     }
   }
 };

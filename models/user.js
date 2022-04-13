@@ -1,7 +1,7 @@
 const knex = require('../database/knex');
 const bcrypt = require('bcrypt');
 
-const USER_TABLE = 'users';
+const USER_TABLE = 'employee';
 
 const createNewUser = async (email, pass) => {
     const salt = await bcrypt.genSalt(10);
@@ -16,21 +16,21 @@ const findUserByEmail = async (email) => {
     return await query;
 }
 
-const authenticateUser = async (email, password) => {
+const authentication = async (email, password) => {
     const users = await findUserByEmail(email);
     if (users.length === 0) {
         console.error(`Email doesn't match`);
-        return false;
+        return 'email doesnt match';
     }
     const validPassword = await bcrypt.compare(password, users[0].password);
     if (validPassword) {
-        return true;
+        return users[0];
     }
-    return false;
+    return 'password doesn\'t match';
 }
 
 module.exports = {
     createNewUser,
     findUserByEmail,
-    authenticateUser
+    authentication
 };
