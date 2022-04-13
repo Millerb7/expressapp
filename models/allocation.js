@@ -29,6 +29,11 @@ const changeAllocation = async (vin,spotId) => {
     
 };
 
+const deleteAllocation = async (id) => {
+    const rows = await knex(ALLOCATION_TABLE).where({ id }).del();
+    return rows;
+};
+
 module.exports = {
     createAllocation,
     changeAllocation

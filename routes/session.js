@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const userControl = require('../controllers/authenticate');
+const authenticator = require('../middleware/auth');
 
 // all routes are localhost:3000/session/...
 
 router.post('/', async (req, res, next) => {
     try {
-        const result = await req.models.user.authentication( req.body.email, req.body.password );
+        const result = await userControl.authenticateUser( req.body.email, req.body.password );
         if(result) {
             res.status(201).json(result);
         } else {
-            res.status(400).json('');
+            res.status(400).json('user is not authinticated');
         }
         
     } catch (err) {
@@ -21,10 +23,9 @@ router.post('/', async (req, res, next) => {
 
 router.get('/', (req, res, next) => {
     try {
-
-        if(1) {
-            const user = req.models.user.findUserByEmail()
-        }
+        authenticator.authenticateJWT( req, res, next );
+        res.status(200).json('user authenticated:', req.user);
+        return req.user;
     } catch (err) {
         console.error('User Not Authenticated:', err);
         res.status(500).json({ message: err.toString() });
