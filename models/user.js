@@ -3,10 +3,10 @@ const bcrypt = require('bcrypt');
 
 const USER_TABLE = 'employee';
 
-const createNewUser = async (email, pass) => {
+const createNewUser = async (email, password) => {
     const salt = await bcrypt.genSalt(10);
-    const hashed = await bcrypt.hash(pass, salt);
-    const query = knex(USER_TABLE).insert({ email, password: hashed });
+    const hash = await bcrypt.hash(password, salt);
+    const query = knex(USER_TABLE).insert({ email, password: hash });
     const result = await query;
     return result;
 };
