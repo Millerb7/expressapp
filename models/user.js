@@ -20,13 +20,14 @@ const authentication = async (email, password) => {
     const users = await findUserByEmail(email);
     if (users.length === 0) {
         console.error(`Email doesn't match`);
-        return 'email doesnt match';
+        return null;
     }
+    console.log(users[0]);
     const validPassword = await bcrypt.compare(password, users[0].password);
     if (validPassword) {
         return users[0];
     }
-    return 'password doesn\'t match';
+    return null;
 }
 
 module.exports = {
