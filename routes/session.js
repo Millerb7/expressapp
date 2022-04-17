@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { createSession } = require('../controllers/session');
 const { authenticateUser } = require('../controllers/authenticate');
+const { authenticateJWT } = require('../middleware/auth');
+
 
 // all routes are localhost:3000/session/...
 
@@ -17,7 +19,7 @@ router.post('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        await authenticateUser( req.user.email, req.user.password );
+        await authenticateJWT( req,res,next );
         res.status(200).json(req.user);
         return req.user;
     } catch (err) {

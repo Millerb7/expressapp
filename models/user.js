@@ -22,7 +22,7 @@ const authentication = async (email, password) => {
         console.error(`Email doesn't match`);
         return null;
     }
-    console.log(users[0]);
+
     const validPassword = await bcrypt.compare(password, users[0].password);
     if (validPassword) {
         return users[0];
