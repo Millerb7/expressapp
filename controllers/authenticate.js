@@ -9,7 +9,6 @@ const authenticateUser = async (email, password) => {
         return user;
     }
     const employees = await User.findUserByEmail(email);
-    console.log('employees', ...employees);
     const accessToken = jwt.sign({ ...employees[0], claims: ['employee'] }, accessTokenSecret);
 
     return accessToken;

@@ -1,25 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const userControl = require('../controllers/authenticate');
-const { authenticateJWT } = require('../middleware/auth');
+const { createSession } = require('../controllers/session');
+const { authenticateUser } = require('../controllers/authenticate');
 
 // all routes are localhost:3000/session/...
 
 router.post('/', async (req, res, next) => {
     try {
-        const result = await userControl.authenticateUser( req.body.email, req.body.password );
-        console.log(req.user);
+        const result = await createSession(req,res,next);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to authenticate:', err);
-        res.status(500).json({ message: err.toString() });
+        res.status(401).json({ message: err.toString() });
     }
-    next();
 });
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
-        authenticateJWT(req,res,next);
+        await authenticateUser( req.user.email, req.user.password );
         res.status(200).json(req.user);
         return req.user;
     } catch (err) {

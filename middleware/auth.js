@@ -4,7 +4,6 @@ const accessTokenSecret = 'insertmemehere';
 
 const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;
-  console.log(authHeader);
   if (!authHeader) {
     return res.sendStatus(401);
   }
@@ -17,7 +16,6 @@ const authenticateJWT = (req, res, next) => {
     }
 
     req.user = user;
-    console.log('qwio '+req.user);
     next();
   });
 };

@@ -1,27 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user');
+const spotController = require('../controllers/spot');
+const { loggerMiddleware } = require('../middleware/logger');
 
-// all routes are localhost:3000/user/...
+// all routes are localhost:3000/spots...
 
-router.get('/', async (req,res,next) => {
+router.get('/', loggerMiddleware, async (req,res,next) => {
   try {
-    const user = await req.models.user.findUserByEmail( req.body.email );
-    res.status(201).json('user: ', user);
+    const spots = await spotController.querySpots(req,res,next);
+    res.status(200).json(spots);
   } catch (err) {
     console.error('Failed to login:', err);
     res.status(500).json({ message: err.toString() });
-  }
-});
-
-router.get('/current', async (req, res, next) => {
-  try {
-      const user = req.user;
-      const result = await User.findUserByEmail(user.email);
-      res.status(201).json(result);
-  } catch (err) {
-      console.error('Failed to load current user:', err);
-      res.sendStatus(500).json({ message: err.toString() });
   }
 });
 

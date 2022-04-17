@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { createModelsMiddleware } = require('./middleware/model-middleware');
+const { loggerMiddleware } = require('./middleware/logger');
 
 const userRoutes = require('./routes/user');
 const sessionRoutes = require('./routes/session');
@@ -22,9 +23,9 @@ app.get('/health', (req, res, next) => {
   next();
 });
 
-app.use('/account', accountRoutes);
-app.use('/user', authenticateWithClaims(['employee']),  userRoutes);
-app.use('/session', sessionRoutes);
+app.use('/account', loggerMiddleware, accountRoutes);
+app.use('/user', authenticateWithClaims(['employee']), loggerMiddleware, userRoutes);
+app.use('/session', loggerMiddleware, sessionRoutes);
 app.use('/allocation', authenticateWithClaims(['employee']), allocationRoutes);
 app.use('/spots', authenticateWithClaims(['employee']), spotRoutes);
 
